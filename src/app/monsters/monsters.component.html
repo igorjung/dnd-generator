@@ -1,0 +1,13 @@
+<div class="wrapper">
+  <div class="wrapper_button">
+    <button class="random" (click)="generateNewMonster()">
+      Randomize
+    </button>
+  </div>
+
+  @if (monster) {
+    <app-sheet [monster]="monster" />
+  } @else {
+    <app-loading />
+  }
+</div>

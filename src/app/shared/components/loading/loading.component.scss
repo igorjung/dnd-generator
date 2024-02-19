@@ -1,0 +1,21 @@
+.wrapper-loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin: 7.5rem 0;
+}
+
+.loader {
+  border: .875rem solid #F2E5BD;
+  border-top: .875rem  solid #6D0000;
+  border-radius: 50%;
+  width: 7.5rem;
+  height: 7.5rem;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

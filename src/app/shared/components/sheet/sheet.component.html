@@ -1,0 +1,197 @@
+<section class="wrapper">
+  <div class="container">
+    <div class="header">
+      <h1>{{ monster.name }}</h1>
+      <p>{{monster.desc }}</p>
+    </div>
+
+    <div class="content">
+      @if (monster.image) {
+        <img
+          [src]="'https://www.dnd5eapi.co' + monster.image"
+          [alt]="monster.name"
+          (load)="imageLoading = false"
+          [hidden]="imageLoading"
+        />
+        <app-loading [hidden]="!imageLoading"/>
+      } @else {
+        <div class="placeholder"></div>
+      }
+
+      <div class="sheet">
+        <div class="header">
+          <h2>{{ monster.name }}</h2>
+          <p>{{ monster.size }} {{ monster.type }}, {{ monster.alignment }}</p>
+        </div>
+        <svg>
+          <polyline points="0,0 360,2.5 0,5" style="fill:#922610;stroke:#922610;"></polyline>
+        </svg>
+
+        <ul class="atributes">
+          <li>
+            <strong>Armor Class</strong>
+            <span>{{ monster.armor_class[0].value }}</span>
+          </li>
+          <li>
+            <strong>Hit Points</strong>
+            <span>{{ monster.hit_points }} ( {{ monster.hit_points_roll }} )</span>
+          </li>
+          <li>
+            <strong>Speed</strong>
+            <span>{{ monster.speed.walk }}</span>
+          </li>
+        </ul>
+        <svg>
+          <polyline points="0,0 360,2.5 0,5" style="fill:#922610;stroke:#922610;"></polyline>
+        </svg>
+
+        <ul class="statuses">
+          <li>
+            <strong>STR</strong>
+            <span>{{ monster.strength }}</span>
+          </li>
+          <li>
+            <strong>DEX</strong>
+            <span>{{ monster.dexterity }}</span>
+          </li>
+          <li>
+            <strong>CON</strong>
+            <span>{{ monster.constitution }}</span>
+          </li>
+          <li>
+            <strong>INT</strong>
+            <span>{{ monster.intelligence }}</span>
+          </li>
+          <li>
+            <strong>WIS</strong>
+            <span>{{ monster.wisdom }}</span>
+          </li>
+          <li>
+            <strong>CHA</strong>
+            <span>{{ monster.charisma }}</span>
+          </li>
+        </ul>
+        <svg>
+          <polyline points="0,0 360,2.5 0,5" style="fill:#922610;stroke:#922610;"></polyline>
+        </svg>
+
+        <ul class="atributes">
+          @if (skills.length) {
+            <li>
+              <strong>Skills</strong>
+              @for (
+                skill of skills;
+                track skill;
+                let first = $first;
+                let last = $last
+              ) {
+                <span>
+                  {{ !first && !last ? ', ' : '' }}
+                  {{ !first && last ? ' and ' : ''  }}
+                  {{ skill.proficiency.name }}  +{{ skill.value }}
+                </span>
+              }
+            <li>
+          }
+          @if (savings.length) {
+            <li>
+              <strong>Saving Throws</strong>
+              @for (
+                saving of savings;
+                track savings;
+                let first = $first;
+                let last = $last
+              ) {
+                <span>
+                  {{ !first && !last ? ', ' : '' }}
+                  {{ !first && last ? ' and ' : ''  }}
+                  {{ saving.proficiency.name }}  +{{ saving.value }}
+                </span>
+              }
+            <li>
+          }
+          @if (monster.damage_resistances.length) {
+            <li>
+              <strong>Damage Resistances</strong>
+              @for (
+                resistance of monster.damage_resistances;
+                track monster;
+                let first = $first;
+                let last = $last
+              ) {
+                <span>
+                  {{ !first && !last ? ', ' : '' }}
+                  {{ !first && last ? ' and ' : ''  }}
+                  {{ resistance }}
+                </span>
+              }
+            </li>
+          }
+          @if (monster.condition_immunities.length) {
+            <li>
+              <strong>Condition Immunities</strong>
+              @for (
+                condition of monster.condition_immunities;
+                track monster;
+                let first = $first;
+                let last = $last
+              ) {
+                <span>
+                  {{ !first && !last ? ', ' : '' }}
+                  {{ !first && last ? ' and ' : ''  }}
+                  {{ condition.name }}
+                </span>
+              }
+            </li>
+          }
+          <li>
+            <strong>Senses</strong>
+            <span>Passive perception {{ monster.senses.passive_perception }}</span>
+            @if (monster.senses.blindsight) {
+              <span>, blindsight {{ monster.senses.blindsight }}</span>
+            }
+            @if (monster.senses.darkvision) {
+              <span>, darkvision {{ monster.senses.darkvision }}</span>
+            }
+          </li>
+          <li>
+            <strong>Languages</strong>
+            <span>{{ monster.languages || '-' }}</span>
+          </li>
+          <li>
+            <strong>Challenge</strong>
+            <span>{{ monster.xp }} XP </span>
+          </li>
+        </ul>
+
+        @if (monster.special_abilities) {
+          <svg>
+            <polyline points="0,0 360,2.5 0,5" style="fill:#922610;stroke:#922610;"></polyline>
+          </svg>
+        }
+
+        <div class="abilities">
+          @for (ability of monster.special_abilities; track monster) {
+            <p>
+              <strong>{{ ability.name }}. </strong>
+              {{ ability.desc }}
+            </p>
+          }
+        </div>
+
+        <div class="actions">
+          <h2>Actions</h2>
+          <hr />
+          <div>
+            @for (action of monster.actions; track monster) {
+              <p>
+                <strong>{{ action.name }}. </strong>
+                {{ action.desc }}
+              </p>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
